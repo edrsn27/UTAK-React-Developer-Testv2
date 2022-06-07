@@ -2,20 +2,73 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/outline";
+import { storage, db } from "../../firebase-config";
 
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+
+import { ref as databaseRef, child, push, set } from "firebase/database";
+
+import { v4 } from "uuid";
+
+import SuccessNotification from "../../components/Notifications/Success";
 export default function Example() {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const submit = (e) => {
+  const [image, setImage] = useState(null);
+
+  const [success, setSuccess] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const uploadImage = async () => {
+    if (image !== null) {
+      const imageRef = storageRef(
+        storage,
+        "images/categories/" + image.name + v4()
+      );
+      await uploadBytes(imageRef, image);
+      const downloadUrl = await getDownloadURL(imageRef);
+      setImage(null);
+      return downloadUrl;
+    }
+
+    return "";
+  };
+  const submit = async (e) => {
     e.preventDefault();
+    setSuccess(false);
+    setLoading(true);
+
+    const postData = {
+      name: name,
+      description: description,
+      image: await uploadImage(),
+    };
+
+    // Get a key for a new category.
+    const newCategoryKey = push(child(databaseRef(db), "categories")).key;
+
+    // add category to the database
+    try {
+      await set(databaseRef(db, "categories/" + newCategoryKey), postData);
+      setSuccess(true);
+    } catch (e) {
+      console.log(e);
+    }
+
+    setLoading(false);
     setOpen(false);
   };
   return (
     <>
+      {success && <SuccessNotification />}
+
       <button
         className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
         onClick={(e) => setOpen(!open)}
@@ -81,7 +134,7 @@ export default function Example() {
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                for="category-name"
+                                forhtml="category-name"
                               >
                                 Name
                               </label>
@@ -91,13 +144,14 @@ export default function Example() {
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
+                                required
                               />
                             </div>
                           </div>
                           <div className="flex flex-wrap mb-6 -mx-3">
                             <div className="w-full px-3">
                               <label
-                                htmlFor="category-description"
+                                forhtml="category-description"
                                 className="block text-sm font-medium text-gray-700"
                               >
                                 Description
@@ -120,16 +174,15 @@ export default function Example() {
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                for="category-name"
+                                forhtml="category-image"
                               >
                                 Image
                               </label>
                               <input
                                 className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="category-name"
+                                id="category-image"
                                 type="file"
-                                value={image}
-                                onChange={(e) => setImage(e.target.value)}
+                                onChange={(e) => setImage(e.target.files[0])}
                               />
                             </div>
                           </div>
@@ -140,8 +193,9 @@ export default function Example() {
                       <button
                         type="submit"
                         className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+                        disabled={loading}
                       >
-                        Save
+                        {loading ? "Saving..." : "Save"}
                       </button>
                       <button
                         type="button"
