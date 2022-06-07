@@ -2,7 +2,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-
+import { useRouter } from "next/router";
 import Link from "next/link";
 const user = {
   name: "Tom Cook",
@@ -10,12 +10,7 @@ const user = {
   imageUrl:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
-const navigation = [
-  { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Point of Sales", href: "/dashboard/point-of-sales", current: false },
-  { name: "Products", href: "/dashboard/products", current: false },
-  { name: "Categories", href: "/dashboard/product-categories", current: false },
-];
+
 const userNavigation = [
   { name: "Your Profile", href: "#" },
   { name: "Settings", href: "#" },
@@ -27,6 +22,30 @@ function classNames(...classes) {
 }
 
 export default function DashboardLayout() {
+  const { pathname } = useRouter();
+  const navigation = [
+    {
+      name: "Dashboard",
+      href: "/dashboard",
+      current: pathname === "/dashboard",
+    },
+    {
+      name: "Point of Sales",
+      href: "/dashboard/point-of-sales",
+      current: pathname === "/dashboard/point-of-sales",
+    },
+    {
+      name: "Products",
+      href: "/dashboard/products",
+      current: pathname === "/dashboard/products",
+    },
+    {
+      name: "Categories",
+      href: "/dashboard/product-categories",
+      current: pathname === "/dashboard/product-categories",
+    },
+  ];
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
