@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
+import Link from "next/link";
 const user = {
   name: "Tom Cook",
   email: "tom@example.com",
@@ -10,11 +11,10 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Reports", href: "#", current: false },
+  { name: "Dashboard", href: "/dashboard", current: true },
+  { name: "Point of Sales", href: "/dashboard/point-of-sales", current: false },
+  { name: "Products", href: "/dashboard/products", current: false },
+  { name: "Categories", href: "/dashboard/product-categories", current: false },
 ];
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -27,7 +27,6 @@ function classNames(...classes) {
 }
 
 export default function DashboardLayout() {
- 
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -45,19 +44,20 @@ export default function DashboardLayout() {
                 <div className="hidden md:block">
                   <div className="flex items-baseline ml-10 space-x-4">
                     {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "px-3 py-2 rounded-md text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
+                      <Link href={item.href}>
+                        <a
+                          key={item.name}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "px-3 py-2 rounded-md text-sm font-medium"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
