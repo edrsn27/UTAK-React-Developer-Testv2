@@ -5,7 +5,7 @@ import { PencilAltIcon } from "@heroicons/react/outline";
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
-    const categoriesRef = ref(db, "categories/");
+    const categoriesRef = ref(db, "products/");
     onValue(categoriesRef, (snapshot) => {
       const data = snapshot.val();
       if (data !== categories) setCategories(Object.entries(data).reverse());
@@ -69,11 +69,13 @@ export default function Categories() {
                 </label>
               </div>
             </th>
-            <th scope="col" className="px-6 py-3">
-              <span className="sr-only">Edit</span>
+            <th scope="col" className="p-4">
+              <div className="flex items-center">
+                <span className="sr-only">Edit</span>
+              </div>
             </th>
             <th scope="col" className="px-6 py-3">
-              Category Name
+              Product Name
             </th>
             <th scope="col" className="px-6 py-3">
               Image

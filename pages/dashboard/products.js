@@ -1,15 +1,15 @@
 import React from "react";
 import Layout from "../../layouts/Dashboard";
-import AddProductCategories from "../../components/Modals/AddProductCategories";
-import ProductCategoriesTable from "../../components/Tables/Categories";
+import AddProduct from "../../components/Modals/AddProduct";
+import ProductsTable from "../../components/Tables/Products";
 export default function Index() {
   return (
     <Layout>
-      <AddProductCategories />
+      <AddProduct />
       <br />
       <br />
       <br />
-      <ProductCategoriesTable />
+      <ProductsTable />
     </Layout>
   );
 }
