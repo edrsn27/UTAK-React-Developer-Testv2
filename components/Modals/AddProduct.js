@@ -3,7 +3,7 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/outline";
 import { storage, db } from "../../firebase-config";
-
+import List from "../HeadlessUI/List";
 import {
   ref as storageRef,
   uploadBytes,
@@ -105,7 +105,7 @@ export default function Example() {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-lg sm:w-full">
+                <Dialog.Panel className="relative text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-lg sm:w-full">
                   <form className="w-full max-w-lg" onSubmit={submit}>
                     <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                       <div className="sm:flex sm:items-start">
@@ -134,7 +134,7 @@ export default function Example() {
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                forhtml="category-name"
+                                htmlFor="category-name"
                               >
                                 Name
                               </label>
@@ -151,7 +151,7 @@ export default function Example() {
                           <div className="flex flex-wrap mb-6 -mx-3">
                             <div className="w-full px-3">
                               <label
-                                forhtml="category-description"
+                                htmlFor="category-description"
                                 className="block text-sm font-medium text-gray-700"
                               >
                                 Description
@@ -174,7 +174,7 @@ export default function Example() {
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                forhtml="category-image"
+                                htmlFor="category-image"
                               >
                                 Image
                               </label>
@@ -184,6 +184,18 @@ export default function Example() {
                                 type="file"
                                 onChange={(e) => setImage(e.target.files[0])}
                               />
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap mb-6 -mx-3">
+                            <div className="w-full px-3">
+                              <label
+                                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                                htmlFor="category-image"
+                              >
+                                Image
+                              </label>
+                              <List />
                             </div>
                           </div>
                         </div>

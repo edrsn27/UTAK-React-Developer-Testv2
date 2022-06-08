@@ -134,7 +134,7 @@ export default function Example() {
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                forhtml="category-name"
+                                htmlFor="category-name"
                               >
                                 Name
                               </label>
@@ -151,7 +151,7 @@ export default function Example() {
                           <div className="flex flex-wrap mb-6 -mx-3">
                             <div className="w-full px-3">
                               <label
-                                forhtml="category-description"
+                                htmlFor="category-description"
                                 className="block text-sm font-medium text-gray-700"
                               >
                                 Description
@@ -174,7 +174,7 @@ export default function Example() {
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                forhtml="category-image"
+                                htmlFor="category-image"
                               >
                                 Image
                               </label>
