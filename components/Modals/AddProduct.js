@@ -37,8 +37,8 @@ export default function Example() {
 
   useEffect(() => {
     setSelectedCategory(categories[0]);
-    console.log(categories[0]);
-  }, [categories]);
+    console.log("hello")
+  }, []);
 
   const uploadImage = async () => {
     if (image !== null) {
@@ -80,6 +80,7 @@ export default function Example() {
       setImage(null);
       setPrice("");
       setOptions([]);
+      setSelectedCategory(categories[0]);
     } catch (e) {
       console.log(e);
     }
