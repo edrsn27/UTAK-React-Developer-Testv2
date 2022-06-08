@@ -3,7 +3,7 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/outline";
 import { storage, db } from "../../firebase-config";
-import List from "../HeadlessUI/List";
+import List from "../HeadlessUI/ListCategories";
 import {
   ref as storageRef,
   uploadBytes,
@@ -22,6 +22,7 @@ export default function Example() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
+  const [price, setPrice] = useState("");
 
   const [success, setSuccess] = useState(false);
 
@@ -44,15 +45,16 @@ export default function Example() {
     e.preventDefault();
     setSuccess(false);
     setLoading(true);
-
+    // Get a key for a new category.
+    const newProductKey = push(child(databaseRef(db), "products")).key;
     const postData = {
+      uuid: newProductKey,
       name: name,
       description: description,
       image: await uploadImage(),
+      category: "Meal",
+      price:Number(price)
     };
-
-    // Get a key for a new category.
-    const newProductKey = push(child(databaseRef(db), "products")).key;
 
     // add category to the database
     try {
@@ -134,13 +136,13 @@ export default function Example() {
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                htmlFor="category-name"
+                                htmlFor="product-name"
                               >
                                 Name
                               </label>
                               <input
                                 className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="category-name"
+                                id="product-name"
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -151,14 +153,14 @@ export default function Example() {
                           <div className="flex flex-wrap mb-6 -mx-3">
                             <div className="w-full px-3">
                               <label
-                                htmlFor="category-description"
+                                htmlFor="product-description"
                                 className="block text-sm font-medium text-gray-700"
                               >
                                 Description
                               </label>
                               <div className="mt-1">
                                 <textarea
-                                  id="category-description"
+                                  id="product-description"
                                   rows={3}
                                   className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                   value={description}
@@ -174,30 +176,48 @@ export default function Example() {
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                htmlFor="category-image"
+                                htmlFor="product-image"
                               >
                                 Image
                               </label>
                               <input
                                 className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="category-image"
+                                id="product-image"
                                 type="file"
                                 onChange={(e) => setImage(e.target.files[0])}
                               />
                             </div>
                           </div>
-
                           <div className="flex flex-wrap mb-6 -mx-3">
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                htmlFor="category-image"
+                                htmlFor="product-price"
+                              >
+                                Price
+                              </label>
+                              <input
+                                className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="product-price"
+                                type="number"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          {/* <div className="flex flex-wrap mb-6 -mx-3">
+                            <div className="w-full px-3">
+                              <label
+                                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                                htmlFor="product-category"
                               >
                                 Image
                               </label>
-                              <List />
+                              <List id="product-category" />
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

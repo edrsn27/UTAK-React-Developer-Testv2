@@ -45,14 +45,15 @@ export default function Example() {
     setSuccess(false);
     setLoading(true);
 
+    // Get a key for a new category.
+    const newCategoryKey = push(child(databaseRef(db), "categories")).key;
+
     const postData = {
+      uuid: newCategoryKey,
       name: name,
       description: description,
       image: await uploadImage(),
     };
-
-    // Get a key for a new category.
-    const newCategoryKey = push(child(databaseRef(db), "categories")).key;
 
     // add category to the database
     try {
