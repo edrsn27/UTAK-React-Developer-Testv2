@@ -62,8 +62,8 @@ export default function DashboardLayout() {
                 </div>
                 <div className="hidden md:block">
                   <div className="flex items-baseline ml-10 space-x-4">
-                    {navigation.map((item) => (
-                      <Link href={item.href}>
+                    {navigation.map((item,index) => (
+                      <Link href={item.href} key={index}>
                         <a
                           key={item.name}
                           className={classNames(
