@@ -39,6 +39,7 @@ export default function QueryProvider({ children }) {
         });
       }
     });
+    console.log("helle")
   }, []);
 
   const value = {

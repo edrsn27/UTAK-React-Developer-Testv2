@@ -86,7 +86,7 @@ export default function Products() {
                     alt={product.name}
                   />
                 </td>
-                <td className="px-6 py-4">{/* product category */}</td>
+                <td className="px-6 py-4">{product.category}</td>
                 <td className="px-6 py-4">{formatter.format(product.price)}</td>
                 <td className="px-6 py-4 text-right">
                   <a

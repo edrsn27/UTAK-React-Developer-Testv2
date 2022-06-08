@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon, TrashIcon } from "@heroicons/react/outline";
 import { storage, db } from "../../firebase-config";
@@ -14,6 +14,8 @@ import { ref as databaseRef, child, push, set } from "firebase/database";
 
 import { v4 } from "uuid";
 
+import { useQuery } from "../../context/QueryProvider";
+
 import SuccessNotification from "../../components/Notifications/Success";
 export default function Example() {
   const [open, setOpen] = useState(false);
@@ -27,9 +29,16 @@ export default function Example() {
   const [options, setOptions] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState("");
-  
+
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { categories } = useQuery();
+
+  useEffect(() => {
+    setSelectedCategory(categories[0]);
+    console.log(categories[0]);
+  }, [categories]);
 
   const uploadImage = async () => {
     if (image !== null) {
@@ -59,6 +68,7 @@ export default function Example() {
       category: "Meal",
       price: Number(price),
       options: options,
+      category: selectedCategory.name,
     };
 
     // add category to the database
