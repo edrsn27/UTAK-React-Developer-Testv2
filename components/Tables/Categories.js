@@ -1,23 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase-config";
-import { ref, onValue } from "firebase/database";
-
+import { useQuery } from "../../context/QueryProvider";
 export default function Products() {
-  // initial categories state
-  const [categories, setCategories] = useState([]);
-  // get all categories from firebase
-  const categoryRef = ref(db, "categories/");
-  useEffect(() => {
-    onValue(categoryRef, (snapshot) => {
-      setCategories([]);
-      const data = snapshot.val();
-      if (data !== null) {
-        Object.values(data).forEach((category) => {
-          setCategories((oldArray) => [...oldArray, category]);
-        });
-      }
-    });
-  }, []);
+  const { categories } = useQuery();
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { db } from "../../firebase-config";
-import { ref, onValue } from "firebase/database";
-
+import React from "react";
+import { useQuery } from "../../context/QueryProvider";
 export default function Products() {
-  // initial products state
-  const [products, setProducts] = useState([]);
-  // get all products from firebase
-  const productRef = ref(db, "products/");
-
+  const { products } = useQuery();
   // Create our number formatter.
   var formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -17,18 +11,6 @@ export default function Products() {
     //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
     //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
-
-  useEffect(() => {
-    onValue(productRef, (snapshot) => {
-      setProducts([]);
-      const data = snapshot.val();
-      if (data !== null) {
-        Object.values(data).forEach((product) => {
-          setProducts((oldArray) => [...oldArray, product]);
-        });
-      }
-    });
-  }, []);
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
