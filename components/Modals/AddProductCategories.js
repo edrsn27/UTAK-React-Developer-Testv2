@@ -24,7 +24,6 @@ export default function Example() {
   const [image, setImage] = useState(null);
 
   const [success, setSuccess] = useState(false);
-
   const [loading, setLoading] = useState(false);
   const uploadImage = async () => {
     if (image !== null) {

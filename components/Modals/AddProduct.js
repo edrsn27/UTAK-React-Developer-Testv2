@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { PlusIcon } from "@heroicons/react/outline";
+import { PlusIcon, TrashIcon } from "@heroicons/react/outline";
 import { storage, db } from "../../firebase-config";
 import List from "../HeadlessUI/ListCategories";
 import {
@@ -24,9 +24,11 @@ export default function Example() {
   const [image, setImage] = useState(null);
   const [price, setPrice] = useState("");
 
-  const [success, setSuccess] = useState(false);
+  const [options, setOptions] = useState([]);
 
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const uploadImage = async () => {
     if (image !== null) {
       const imageRef = storageRef(
@@ -53,13 +55,19 @@ export default function Example() {
       description: description,
       image: await uploadImage(),
       category: "Meal",
-      price:Number(price)
+      price: Number(price),
+      options: options,
     };
 
     // add category to the database
     try {
       await set(databaseRef(db, "products/" + newProductKey), postData);
       setSuccess(true);
+      setName("");
+      setDescription("");
+      setImage(null);
+      setPrice("");
+      setOptions([]);
     } catch (e) {
       console.log(e);
     }
@@ -141,7 +149,7 @@ export default function Example() {
                                 Name
                               </label>
                               <input
-                                className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                className="block w-full px-4 py-3 leading-tight text-gray-700 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="product-name"
                                 type="text"
                                 value={name}
@@ -162,7 +170,7 @@ export default function Example() {
                                 <textarea
                                   id="product-description"
                                   rows={3}
-                                  className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                  className="block w-full px-4 py-3 leading-tight text-gray-700 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                   value={description}
                                   onChange={(e) =>
                                     setDescription(e.target.value)
@@ -181,7 +189,7 @@ export default function Example() {
                                 Image
                               </label>
                               <input
-                                className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                className="block w-full px-4 py-3 leading-tight text-gray-700 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="product-image"
                                 type="file"
                                 onChange={(e) => setImage(e.target.files[0])}
@@ -197,13 +205,108 @@ export default function Example() {
                                 Price
                               </label>
                               <input
-                                className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                className="block w-full px-4 py-3 leading-tight text-gray-700 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="product-price"
                                 type="number"
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                                 required
                               />
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap mb-6 -mx-3">
+                            <div className="w-full px-3">
+                              <button
+                                type="button"
+                                class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                onClick={() => {
+                                  setOptions((oldArray) => [
+                                    ...oldArray,
+                                    { name: "", additionalCost: 0 },
+                                  ]);
+                                }}
+                              >
+                                Add options
+                              </button>
+
+                              <div className="grid grid-cols-12 gap-6 mt-4">
+                                {options.map((option, index) => (
+                                  <>
+                                    <div className="col-span-5 sm:col-span-5">
+                                      <label
+                                        className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                                        htmlFor={
+                                          "product-option-" + index + "-name"
+                                        }
+                                      >
+                                        Name
+                                      </label>
+                                      <input
+                                        className="block w-full px-4 py-3 leading-tight text-gray-700 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        id={"product-option-" + index + "-name"}
+                                        type="text"
+                                        value={options[index].name}
+                                        onChange={(e) => {
+                                          let newArr = [...options]; // copying the old datas array
+                                          newArr[index].name = e.target.value; // replace e.target.value with whatever you want to change it to
+                                          setOptions(newArr);
+                                        }}
+                                        required
+                                      />
+                                    </div>
+
+                                    <div className="col-span-5 sm:col-span-5">
+                                      <label
+                                        className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                                        htmlFor={
+                                          "product-option-" +
+                                          index +
+                                          "-additionalCost"
+                                        }
+                                      >
+                                        Additional Cost
+                                      </label>
+                                      <input
+                                        className="block w-full px-4 py-3 leading-tight text-gray-700 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        id={
+                                          "product-option-" +
+                                          index +
+                                          "-additionalCost"
+                                        }
+                                        type="number"
+                                        value={options[index].additionalCost}
+                                        onChange={(e) => {
+                                          let newArr = [...options]; // copying the old datas array
+                                          newArr[index].additionalCost =
+                                            e.target.value; // replace e.target.value with whatever you want to change it to
+                                          setOptions(newArr);
+                                        }}
+                                        required
+                                      />
+                                    </div>
+                                    <div className="col-span-2 sm:col-span-2">
+                                      <div class="flex space-x-2 justify-center">
+                                        <div className="mt-7">
+                                          <button
+                                            type="button"
+                                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-blue-red"
+                                            onClick={() => {
+                                              setOptions((oldArray) =>
+                                                oldArray.filter(
+                                                  (item, i) => i !== index
+                                                )
+                                              );
+                                            }}
+                                          >
+                                            <TrashIcon class="w-4 h-4" />
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </>
+                                ))}
+                              </div>
                             </div>
                           </div>
 
