@@ -3,7 +3,7 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon, TrashIcon } from "@heroicons/react/outline";
 import { storage, db } from "../../firebase-config";
-import List from "../HeadlessUI/ListCategories";
+import ListOfCategories from "../HeadlessUI/ListCategories";
 import {
   ref as storageRef,
   uploadBytes,
@@ -26,6 +26,8 @@ export default function Example() {
 
   const [options, setOptions] = useState([]);
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+  
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -75,6 +77,7 @@ export default function Example() {
     setLoading(false);
     setOpen(false);
   };
+
   return (
     <>
       {success && <SuccessNotification />}
@@ -219,7 +222,7 @@ export default function Example() {
                             <div className="w-full px-3">
                               <button
                                 type="button"
-                                class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                 onClick={() => {
                                   setOptions((oldArray) => [
                                     ...oldArray,
@@ -286,11 +289,11 @@ export default function Example() {
                                       />
                                     </div>
                                     <div className="col-span-2 sm:col-span-2">
-                                      <div class="flex space-x-2 justify-center">
+                                      <div className="flex justify-center space-x-2">
                                         <div className="mt-7">
                                           <button
                                             type="button"
-                                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-blue-red"
+                                            className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-blue-red"
                                             onClick={() => {
                                               setOptions((oldArray) =>
                                                 oldArray.filter(
@@ -299,7 +302,7 @@ export default function Example() {
                                               );
                                             }}
                                           >
-                                            <TrashIcon class="w-4 h-4" />
+                                            <TrashIcon className="w-4 h-4" />
                                           </button>
                                         </div>
                                       </div>
@@ -310,17 +313,21 @@ export default function Example() {
                             </div>
                           </div>
 
-                          {/* <div className="flex flex-wrap mb-6 -mx-3">
+                          <div className="flex flex-wrap mb-6 -mx-3">
                             <div className="w-full px-3">
                               <label
                                 className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                                 htmlFor="product-category"
                               >
-                                Image
+                                Category
                               </label>
-                              <List id="product-category" />
+
+                              <ListOfCategories
+                                setSelectedCategory={setSelectedCategory}
+                                selectedCategory={selectedCategory}
+                              />
                             </div>
-                          </div> */}
+                          </div>
                         </div>
                       </div>
                     </div>
