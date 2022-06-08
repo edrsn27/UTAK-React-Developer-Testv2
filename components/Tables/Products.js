@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "../../context/QueryProvider";
+import EditProduct from "./../Modals/EditProduct";
 export default function Products() {
   const { products } = useQuery();
   // Create our number formatter.
@@ -86,15 +87,10 @@ export default function Products() {
                     alt={product.name}
                   />
                 </td>
-                <td className="px-6 py-4">{product.category}</td>
+                <td className="px-6 py-4">{product.category.name}</td>
                 <td className="px-6 py-4">{formatter.format(product.price)}</td>
                 <td className="px-6 py-4 text-right">
-                  <a
-                    href="#"
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Edit
-                  </a>
+                  <EditProduct product={product} />
                 </td>
               </tr>
             ))}

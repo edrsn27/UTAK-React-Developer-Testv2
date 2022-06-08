@@ -22,6 +22,7 @@ export default function QueryProvider({ children }) {
   useEffect(() => {
     onValue(productRef, (snapshot) => {
       setProducts([]);
+
       const data = snapshot.val();
       if (data !== null) {
         Object.values(data).forEach((product) => {
@@ -32,6 +33,7 @@ export default function QueryProvider({ children }) {
 
     onValue(categoryRef, (snapshot) => {
       setCategories([]);
+
       const data = snapshot.val();
       if (data !== null) {
         Object.values(data).forEach((category) => {
@@ -39,12 +41,11 @@ export default function QueryProvider({ children }) {
         });
       }
     });
-    console.log("helle")
   }, []);
 
   const value = {
     products,
-    categories
+    categories,
   };
   return (
     <QueryContext.Provider value={value}>{children}</QueryContext.Provider>
