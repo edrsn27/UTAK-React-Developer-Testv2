@@ -63,6 +63,9 @@ export default function Products() {
                 Price
               </th>
               <th scope="col" className="px-6 py-3">
+                Stocks
+              </th>
+              <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
               </th>
             </tr>
@@ -89,6 +92,7 @@ export default function Products() {
                 </td>
                 <td className="px-6 py-4">{product.category.name}</td>
                 <td className="px-6 py-4">{formatter.format(product.price)}</td>
+                <td className="px-6 py-4">{product.stocks}</td>
                 <td className="px-6 py-4 text-right">
                   <EditProduct product={product} />
                 </td>

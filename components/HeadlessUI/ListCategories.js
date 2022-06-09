@@ -6,9 +6,9 @@ import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 export default function Example({ selectedCategory, setSelectedCategory }) {
   const { categories } = useQuery();
 
-  // useEffect(() => {
-
-  // }, []);
+  useEffect(() => {
+    if (categories) setSelectedCategory(categories[0]);
+  }, []);
 
   if (categories)
     return (

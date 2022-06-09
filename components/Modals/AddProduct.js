@@ -18,6 +18,8 @@ import { useQuery } from "../../context/QueryProvider";
 
 import SuccessNotification from "../../components/Notifications/Success";
 export default function Example() {
+  const { categories } = useQuery();
+
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
 
@@ -25,6 +27,7 @@ export default function Example() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [price, setPrice] = useState("");
+  const [stocks, setStocks] = useState(0);
 
   const [options, setOptions] = useState([]);
 
@@ -33,11 +36,7 @@ export default function Example() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { categories } = useQuery();
 
-  useEffect(() => {
-    setSelectedCategory(categories[0]);
-  }, []);
 
   const uploadImage = async () => {
     if (image !== null) {
@@ -66,6 +65,7 @@ export default function Example() {
       image: await uploadImage(),
       category: selectedCategory,
       price: Number(price),
+      stocks: stocks,
       options: options,
       category: selectedCategory,
     };
@@ -335,6 +335,24 @@ export default function Example() {
                               <ListOfCategories
                                 setSelectedCategory={setSelectedCategory}
                                 selectedCategory={selectedCategory}
+                              />
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap mb-6 -mx-3">
+                            <div className="w-full px-3">
+                              <label
+                                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                                htmlFor="product-stock"
+                              >
+                                Amoun in Stock
+                              </label>
+                              <input
+                                className="block w-full px-4 py-3 leading-tight text-gray-700 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="product-stock"
+                                type="number"
+                                value={stocks}
+                                onChange={(e) => setStocks(e.target.value)}
+                                required
                               />
                             </div>
                           </div>
