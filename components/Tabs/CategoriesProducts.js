@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "../../context/QueryProvider";
 import { useQuery as usePostQuery } from "../../context/PosProvider";
 export default function CategoriesProducts() {
   const { categoriesProducts } = useQuery();
   const { selectedCategory, setSelectedCategory } = usePostQuery();
+  useEffect(() => {
+    if (categoriesProducts) {
+      setSelectedCategory(categoriesProducts[0]);
+    }
+    console.log(categoriesProducts);
+  }, [categoriesProducts]);
 
   return (
     <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
