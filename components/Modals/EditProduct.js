@@ -3,14 +3,20 @@ import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon, TrashIcon } from "@heroicons/react/outline";
 import { storage, db } from "../../firebase-config";
-import ListOfCategories from "../HeadlessUI/ListCategories";
+import ListOfCategories from "../HeadlessUI/EditProduct/ListCategories";
 import {
   ref as storageRef,
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
 
-import { ref as databaseRef, child, push, set } from "firebase/database";
+import {
+  ref as databaseRef,
+  child,
+  push,
+  set,
+  update,
+} from "firebase/database";
 
 import { v4 } from "uuid";
 
@@ -74,7 +80,19 @@ export default function Example({ product }) {
     console.log(postData);
     // add category to the database
     try {
-      await set(databaseRef(db, "products/" + product.uuid), postData);
+      // await set(databaseRef(db, "products/" + product.uuid), postData);
+      const updates = {};
+      updates["/products/" + product.uuid] = postData;
+
+      updates[
+        "/categoriesProducts/" + product.category.uuid + "/products/" + product.uuid
+      ] = null;
+      updates[
+        "/categoriesProducts/" + selectedCategory.uuid + "/products/" + product.uuid
+      ] = postData;
+
+
+      await update(databaseRef(db), updates);
     } catch (e) {
       console.log(e);
     }

@@ -10,7 +10,13 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
-import { ref as databaseRef, child, push, set } from "firebase/database";
+import {
+  ref as databaseRef,
+  child,
+  push,
+  set,
+  update,
+} from "firebase/database";
 
 import { v4 } from "uuid";
 
@@ -56,7 +62,11 @@ export default function AddProductCategories() {
 
     // add category to the database
     try {
-      await set(databaseRef(db, "categories/" + newCategoryKey), postData);
+      // await set(databaseRef(db, "categories/" + newCategoryKey), postData);
+      const updates = {};
+      updates["/categories/" + newCategoryKey] = postData;
+      updates["/categoriesProducts/" + newCategoryKey] = postData;
+      update(databaseRef(db), updates);
       setSuccess(true);
     } catch (e) {
       console.log(e);

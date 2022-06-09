@@ -62,7 +62,7 @@ export default function AddProducts() {
     setLoading(true);
     // Get a key for a new category.
     const newProductKey = push(child(databaseRef(db), "products")).key;
-    const postData = {
+    const productPostData = {
       uuid: newProductKey,
       name: name,
       description: description,
@@ -77,8 +77,10 @@ export default function AddProducts() {
     // add category to the database
     try {
       const updates = {};
-      updates["/products/" + newProductKey] = postData;
-      updates["/categoriesProducts/" + selectedCategory.uuid] = postData;
+      updates["/products/" + newProductKey] = productPostData;
+      updates[
+        "/categoriesProducts/" + selectedCategory.uuid + "/products/" + newProductKey
+      ] = productPostData;
 
       await update(databaseRef(db), updates);
 
