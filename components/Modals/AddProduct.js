@@ -10,7 +10,13 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
-import { ref as databaseRef, child, push, set } from "firebase/database";
+import {
+  ref as databaseRef,
+  child,
+  push,
+  set,
+  update,
+} from "firebase/database";
 
 import { v4 } from "uuid";
 
@@ -70,7 +76,12 @@ export default function AddProducts() {
 
     // add category to the database
     try {
-      await set(databaseRef(db, "products/" + newProductKey), postData);
+      const updates = {};
+      updates["/products/" + newProductKey] = postData;
+      updates["/categoriesProducts/" + selectedCategory.uuid] = postData;
+
+      await update(databaseRef(db), updates);
+
       setSuccess(true);
       setName("");
       setDescription("");
