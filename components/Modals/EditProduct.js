@@ -245,7 +245,10 @@ export default function Example({ product }) {
                                 {options &&
                                   options.map((option, index) => (
                                     <>
-                                      <div className="col-span-5 sm:col-span-5">
+                                      <div
+                                        className="col-span-5 sm:col-span-5"
+                                        key={index}
+                                      >
                                         <label
                                           className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                                           htmlFor={

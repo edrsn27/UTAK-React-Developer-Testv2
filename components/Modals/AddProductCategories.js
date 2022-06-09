@@ -15,7 +15,7 @@ import { ref as databaseRef, child, push, set } from "firebase/database";
 import { v4 } from "uuid";
 
 import SuccessNotification from "../../components/Notifications/Success";
-export default function Example() {
+export default function AddProductCategories() {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
 

@@ -71,9 +71,9 @@ export default function Products() {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {products.map((product,index) => (
               <tr
-                key={product.uuid}
+                key={index}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 <th

@@ -17,7 +17,7 @@ import { v4 } from "uuid";
 import { useQuery } from "../../context/QueryProvider";
 
 import SuccessNotification from "../../components/Notifications/Success";
-export default function Example() {
+export default function AddProducts() {
   const { categories } = useQuery();
 
   const [open, setOpen] = useState(false);
@@ -35,8 +35,6 @@ export default function Example() {
 
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-
-
 
   const uploadImage = async () => {
     if (image !== null) {

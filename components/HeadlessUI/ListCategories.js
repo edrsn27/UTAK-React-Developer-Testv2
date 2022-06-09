@@ -3,7 +3,7 @@ import { Fragment, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
-export default function Example({ selectedCategory, setSelectedCategory }) {
+export default function ListOfCategories({ selectedCategory, setSelectedCategory }) {
   const { categories } = useQuery();
 
   useEffect(() => {
