@@ -19,6 +19,9 @@ export default function QueryProvider({ children }) {
   // get all categories from firebase
   const categoryRef = ref(db, "categories/");
 
+  const [categoriesProducts, setCategoriesProducts] = useState([]);
+
+  const categoriesProductsRef = ref(db, "categoriesProducts/");
   useEffect(() => {
     onValue(productRef, (snapshot) => {
       setProducts([]);
@@ -41,11 +44,22 @@ export default function QueryProvider({ children }) {
         });
       }
     });
+
+    onValue(categoriesProductsRef, (snapshot) => {
+      setCategoriesProducts([]);
+      const data = snapshot.val();
+      if (data !== null) {
+        Object.values(data).forEach((category) => {
+          setCategoriesProducts((oldArray) => [...oldArray, category]);
+        });
+      }
+    });
   }, []);
 
   const value = {
     products,
     categories,
+    categoriesProducts,
   };
   return (
     <QueryContext.Provider value={value}>{children}</QueryContext.Provider>
