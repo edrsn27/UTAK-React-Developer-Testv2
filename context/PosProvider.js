@@ -23,7 +23,6 @@ export default function QueryProvider({ children }) {
     newOrder.items.push(item);
     newOrder.totalAmount += item.price;
     setOrder(newOrder);
-   
   };
 
   const updateItemQuantity = (index, quantity) => {
@@ -35,7 +34,9 @@ export default function QueryProvider({ children }) {
     newOrder.totalAmount =
       newOrder.totalAmount + quantity * newOrder.items[index].price;
     newOrder.items[index].quantity = quantity;
-
+    if (quantity == 0) {
+      newOrder.items.splice(index, 1);
+    }
     setOrder(newOrder);
   };
 
