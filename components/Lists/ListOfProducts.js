@@ -39,6 +39,9 @@ export default function ListOfProducts() {
                     <div className="text-3xl font-bold text-gray-900 dark:text-white">
                       {formatter.format(product.price)}
                     </div>
+                    <div className="font-bold text-gray-900 text-xm dark:text-white">
+                      stocks : {product.stocks}
+                    </div>
                   </a>
 
                   {/* <div className="flex items-center justify-between">
