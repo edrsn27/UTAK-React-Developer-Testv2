@@ -77,7 +77,6 @@ export default function Example({ product }) {
       image: newImageDownloadUrl ? newImageDownloadUrl : product.image,
     };
 
-    console.log(postData);
     // add category to the database
     try {
       // await set(databaseRef(db, "products/" + product.uuid), postData);
@@ -85,12 +84,17 @@ export default function Example({ product }) {
       updates["/products/" + product.uuid] = postData;
 
       updates[
-        "/categoriesProducts/" + product.category.uuid + "/products/" + product.uuid
+        "/categoriesProducts/" +
+          product.category.uuid +
+          "/products/" +
+          product.uuid
       ] = null;
       updates[
-        "/categoriesProducts/" + selectedCategory.uuid + "/products/" + product.uuid
+        "/categoriesProducts/" +
+          selectedCategory.uuid +
+          "/products/" +
+          product.uuid
       ] = postData;
-
 
       await update(databaseRef(db), updates);
     } catch (e) {
@@ -99,7 +103,6 @@ export default function Example({ product }) {
 
     setLoading(false);
     setOpen(false);
-    console.log(product);
   };
 
   return (
@@ -313,8 +316,11 @@ export default function Example({ product }) {
                                           value={options[index].additionalCost}
                                           onChange={(e) => {
                                             let newArr = [...options]; // copying the old datas array
-                                            newArr[index].additionalCost =
-                                              e.target.value; // replace e.target.value with whatever you want to change it to
+                                            newArr[
+                                              index
+                                            ].additionalCost = Number(
+                                              e.target.value
+                                            ); // replace e.target.value with whatever you want to change it to
                                             setOptions(newArr);
                                           }}
                                           required

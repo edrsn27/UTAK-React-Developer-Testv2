@@ -79,7 +79,10 @@ export default function AddProducts() {
       const updates = {};
       updates["/products/" + newProductKey] = productPostData;
       updates[
-        "/categoriesProducts/" + selectedCategory.uuid + "/products/" + newProductKey
+        "/categoriesProducts/" +
+          selectedCategory.uuid +
+          "/products/" +
+          newProductKey
       ] = productPostData;
 
       await update(databaseRef(db), updates);
@@ -302,8 +305,9 @@ export default function AddProducts() {
                                         value={options[index].additionalCost}
                                         onChange={(e) => {
                                           let newArr = [...options]; // copying the old datas array
-                                          newArr[index].additionalCost =
-                                            e.target.value; // replace e.target.value with whatever you want to change it to
+                                          newArr[index].additionalCost = Number(
+                                            e.target.value
+                                          ); // replace e.target.value with whatever you want to change it to
                                           setOptions(newArr);
                                         }}
                                         required
