@@ -48,6 +48,10 @@ export default function QueryProvider({ children }) {
     setOrder(newOrder);
   };
 
+  const checkout = () => {
+    console.log(order);
+  };
+
   const value = {
     selectedCategory,
     setSelectedCategory,
@@ -56,7 +60,9 @@ export default function QueryProvider({ children }) {
     updateItemQuantity,
     removeItem,
     formatter,
+    checkout,
   };
+
   return (
     <QueryContext.Provider value={value}>{children}</QueryContext.Provider>
   );

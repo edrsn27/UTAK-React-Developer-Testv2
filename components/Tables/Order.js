@@ -1,7 +1,13 @@
 import React from "react";
 import { useQuery } from "../../context/PosProvider";
 export default function OrderList() {
-  const { order, formatter, updateItemQuantity, removeItem } = useQuery();
+  const {
+    order,
+    formatter,
+    updateItemQuantity,
+    removeItem,
+    checkout,
+  } = useQuery();
   // if (order.items.length > 0)
   // overflow-x-auto shadow-md overflw-y-auto
   return (
@@ -97,6 +103,7 @@ export default function OrderList() {
         <button
           type="button"
           className=" float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          onClick={checkout}
         >
           <svg
             className="w-5 h-5 mr-2 -ml-1"
