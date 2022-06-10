@@ -30,6 +30,11 @@ export default function ListOfProducts() {
                     }
                     className="cursor-pointer"
                   >
+                    <img
+                      class="rounded-t-lg h-48 w-full object-cover"
+                      src={product.image}
+                      alt=""
+                    />
                     <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                       {product.name}
                     </h5>
