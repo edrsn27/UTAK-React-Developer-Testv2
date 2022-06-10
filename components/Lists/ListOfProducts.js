@@ -47,11 +47,11 @@ export default function ListOfProducts() {
                     </div>
                   </a>
                   <div key={index} className="mt-3">
-                    <div className="flex items-center justify-between">
+                    <div className="flex mt-4 space-x-3 lg:mt-6">
                       {product.options &&
                         product.options.map((option, index) => (
                           <a
-                            className="cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-sm rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="inline-flex cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-sm rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             onClick={() =>
                               addItem({
                                 name: product.name,
