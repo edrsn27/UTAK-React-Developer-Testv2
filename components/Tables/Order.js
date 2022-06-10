@@ -14,6 +14,9 @@ export default function OrderList() {
                 Product name
               </th>
               <th scope="col" className="px-6 py-3">
+                Option
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Price
               </th>
               <th scope="col" className="px-6 py-3">
@@ -36,6 +39,12 @@ export default function OrderList() {
                     className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
                   >
                     {item.name}
+                  </th>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                  >
+                    {item.option}
                   </th>
                   <td className="px-6 py-4">{item.price}</td>
                   <td className="px-6 py-4">

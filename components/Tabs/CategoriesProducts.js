@@ -8,7 +8,7 @@ export default function CategoriesProducts() {
     if (categoriesProducts) {
       setSelectedCategory(categoriesProducts[0]);
     }
-    console.log(categoriesProducts);
+   
   }, [categoriesProducts]);
 
   return (
