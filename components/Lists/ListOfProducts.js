@@ -10,7 +10,7 @@ export default function ListOfProducts() {
 
   return (
     <>
-      <div>
+      <div className="max-h-full ">
         {selectedCategory != null &&
           selectedCategory.products &&
           Object.values(selectedCategory.products).map((product, index) => {

@@ -19,14 +19,6 @@ import { LockClosedIcon } from "@heroicons/react/solid";
 export default function SignIn() {
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-50">
-        <body class="h-full">
-        ```
-      */}
       <div className="flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
@@ -65,7 +57,7 @@ export default function SignIn() {
                   placeholder="Email address"
                 />
               </div>
-              <div >
+              <div>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>

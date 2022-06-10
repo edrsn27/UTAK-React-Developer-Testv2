@@ -51,11 +51,22 @@ export default function QueryProvider({ children }) {
     // setOrder((order.items) => [...items, item]);
     // console.log(order);
   };
+  const deleteItemFromOrder = (index) => {
+    let newItems = [...order.items];
+    let newTotalAmount = order.totalAmount;
+    newTotalAmount -= newItems[index].price;
+    newItems.splice(index, 1);
+    setOrder({
+      items: newItems,
+      totalAmount: newTotalAmount,
+    });
+  };
   const value = {
     selectedCategory,
     setSelectedCategory,
     order,
     addItemToOrder,
+    deleteItemFromOrder,
     formatter,
   };
   return (
