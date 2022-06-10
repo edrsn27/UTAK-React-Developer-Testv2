@@ -50,8 +50,19 @@ export default function QueryProvider({ children }) {
   };
 
   const checkout = async () => {
-    const order = await checkOut(order);
-    return order;
+    try {
+      await checkOut(order);
+      clearOrder();
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const clearOrder = () => {
+    setOrder({
+      items: [],
+      totalAmount: 0,
+    });
   };
 
   const value = {
