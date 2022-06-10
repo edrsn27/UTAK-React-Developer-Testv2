@@ -26,6 +26,7 @@ export default function QueryProvider({ children }) {
   };
 
   const updateItemQuantity = (index, quantity) => {
+    quantity = Number(quantity);
     let newOrder = { ...order };
 
     newOrder.totalAmount =
