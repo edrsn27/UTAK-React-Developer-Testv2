@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-
+import { checkOut } from "../admin-functions/orders";
 const QueryContext = createContext();
 
 export const useQuery = () => {
@@ -49,8 +49,9 @@ export default function QueryProvider({ children }) {
     setOrder(newOrder);
   };
 
-  const checkout = () => {
-    console.log(order);
+  const checkout = async () => {
+    const order = await checkOut(order);
+    return order;
   };
 
   const value = {
