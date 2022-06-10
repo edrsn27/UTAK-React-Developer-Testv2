@@ -2,11 +2,8 @@ import React, { useEffect } from "react";
 import { useQuery } from "../../context/PosProvider";
 
 export default function ListOfProducts() {
-  const { selectedCategory, addItemToOrder, order, formatter } = useQuery();
+  const { selectedCategory, addItem, order, formatter } = useQuery();
   const { categories } = useQuery();
-  const addItemToOrderHandler = (item) => {
-    addItemToOrder(item);
-  };
 
   return (
     <>
@@ -22,16 +19,16 @@ export default function ListOfProducts() {
                 <div className="px-5 pb-5">
                   <a
                     onClick={() =>
-                      addItemToOrderHandler({
+                      addItem({
                         name: product.name,
+                        price: product.price,
                         quantity: 1,
-                        price: Number(product.price),
                       })
                     }
                     className="cursor-pointer"
                   >
                     <img
-                      class="rounded-t-lg h-48 w-full object-cover"
+                      className="object-cover w-full h-48 rounded-t-lg"
                       src={product.image}
                       alt=""
                     />

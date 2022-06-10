@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "../../context/PosProvider";
 export default function OrderList() {
-  const { order, formatter, deleteItemFromOrder } = useQuery();
+  const { order, formatter, updateItemQuantity, removeItem } = useQuery();
   // if (order.items.length > 0)
   // overflow-x-auto shadow-md overflw-y-auto
   return (
@@ -38,12 +38,26 @@ export default function OrderList() {
                     {item.name}
                   </th>
                   <td className="px-6 py-4">{item.price}</td>
-                  <td className="px-6 py-4">{item.quantity}</td>
+                  <td className="px-6 py-4">
+                    <div>
+                      <input
+                        type="number"
+                        id="item-quantity"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        defaultValue={item.quantity}
+                        required
+                        min="0"
+                        onChange={(e) =>
+                          updateItemQuantity(index, e.target.value)
+                        }
+                      />
+                    </div>
+                  </td>
                   <td className="px-6 py-4 ">
                     <button
                       type="button"
                       className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                      onClick={() => deleteItemFromOrder(index)}
+                      onClick={() => removeItem(index)}
                     >
                       <svg
                         className="w-6 h-6"
@@ -53,9 +67,9 @@ export default function OrderList() {
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                         ></path>
                       </svg>
@@ -73,10 +87,10 @@ export default function OrderList() {
         <br />
         <button
           type="button"
-          class=" float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className=" float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           <svg
-            class="w-5 h-5 mr-2 -ml-1"
+            className="w-5 h-5 mr-2 -ml-1"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"

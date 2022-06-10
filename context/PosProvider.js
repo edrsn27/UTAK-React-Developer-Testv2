@@ -22,51 +22,42 @@ export default function QueryProvider({ children }) {
     //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
 
-  // let orderTemp = {
-  //   items: [
-  //     {
-  //       name: "",
-  //       quantity: 0,
-  //       price: 0,
-  //       option: {
-  //         name: "",
-  //         additionalCost: 0,
-  //       },
-  //     },
-  //   ],
-  //   totalAmount: 0,
-  //   receivedAmount: 0,
-  //   change: 0,
-  // };
+  const addItem = (item) => {
+    let newOrder = { ...order };
+    newOrder.items.push(item);
+    newOrder.totalAmount += item.price;
+    setOrder(newOrder);
+    console.log(newOrder);
+  };
 
-  const addItemToOrder = (item) => {
-    let newItems = [...order.items];
-    let newTotalAmount = order.totalAmount;
-    newTotalAmount += item.price;
-    newItems.push(item);
-    setOrder({
-      items: newItems,
-      totalAmount: newTotalAmount,
-    });
-    // setOrder((order.items) => [...items, item]);
-    // console.log(order);
+  const updateItemQuantity = (index, quantity) => {
+    let newOrder = { ...order };
+
+    newOrder.totalAmount =
+      newOrder.totalAmount -
+      newOrder.items[index].price * newOrder.items[index].quantity;
+    newOrder.totalAmount =
+      newOrder.totalAmount + quantity * newOrder.items[index].price;
+    newOrder.items[index].quantity = quantity;
+
+    setOrder(newOrder);
   };
-  const deleteItemFromOrder = (index) => {
-    let newItems = [...order.items];
-    let newTotalAmount = order.totalAmount;
-    newTotalAmount -= newItems[index].price;
-    newItems.splice(index, 1);
-    setOrder({
-      items: newItems,
-      totalAmount: newTotalAmount,
-    });
+
+  const removeItem = (index) => {
+    let newOrder = { ...order };
+    newOrder.totalAmount -=
+      newOrder.items[index].price * newOrder.items[index].quantity;
+    newOrder.items.splice(index, 1);
+    setOrder(newOrder);
   };
+
   const value = {
     selectedCategory,
     setSelectedCategory,
     order,
-    addItemToOrder,
-    deleteItemFromOrder,
+    addItem,
+    updateItemQuantity,
+    removeItem,
     formatter,
   };
   return (
